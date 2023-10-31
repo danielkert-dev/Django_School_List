@@ -13,18 +13,33 @@
             <form method="post">
                 {% csrf_token %}
                 {{ password_form.old_password.label_tag }} {{ password_form.old_password }}
+                <div class="row mt-2">
+                    <div class="col-6">
                 {{ password_form.new_password1.label_tag }} {{ password_form.new_password1 }}
+                    </div>
+                    <div class="col-6">
                 {{ password_form.new_password2.label_tag }} {{ password_form.new_password2 }}
+                    </div>
+                </div>
                 <button type="submit" name="change_password" class="btn btn-primary mt-2">Change Password</button>
             </form>
             <hr>
+            <h3>Change Username</h3>
             <form method="post">
                 {% csrf_token %}
-                {{ user_form.new_username.label_tag }} {{ user_form.new_username }}
-                {{ user_form.email.label_tag }} {{ user_form.email }}
+                <div class="row">
+                    <div class="col-6">
+                        {{ user_form.new_username.label_tag }} {{ user_form.new_username }}
+
+                    </div>
+                    <div class="col-6">
+                        {{ user_form.email.label_tag }} {{ user_form.email }}
+                    </div>
+                </div>
                 <button type="submit" name="update_profile" class="btn btn-primary mt-2">Update Profile</button>
             </form>
             <hr>
+            <h3>Change Profile Picture</h3>
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ profile_form.image.label_tag }} {{ profile_form.image }}

@@ -31,7 +31,7 @@ def signup(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                models.UserProfile.objects.create(user=user)  # This will create the UserProfile
+                # models.UserProfile.objects.create(user=user)  # This will create the UserProfile
 
             messages.success(request, f'Account created for {username}')
             return redirect('/')
