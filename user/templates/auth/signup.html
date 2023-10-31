@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include "nav.html" %}
+
+<div class="container" >
+<div class="card mt-5 w-50 mx-auto">
+<div class="card-header ">
+<h1>Sign Up</h1>
+</div>
+<div class="card-body">
+<form method="POST" class="form-group">
+    {% csrf_token %}
+    <div class="input-group my-1">
+    <div class="input-group-text w-25">{{ form.username.label }}</div>
+    {{ form.username }}
+    <div class="text-muted my-2">
+    {{ form.username.help_text }}
+    </div>
+    </div>
+
+    <div class="input-group my-1">
+    <div class="input-group-text  w-25">{{ form.email.label }}</div>
+    {{ form.email }}
+    {% comment %} <div class="text-muted my-2">
+    {{ form.email.help_text }}
+    </div> {% endcomment %}
+    </div>
+
+    <div class="input-group my-1">
+    <div class="input-group-text  w-25">{{ form.password1.label }}</div>
+    {{ form.password1 }}
+    <div class="text-muted my-2">
+    {{ form.password1.help_text }}
+    </div>
+    </div>
+
+    <div class="input-group my-2">
+    <div class="input-group-text  w-25">{{ form.password2.label }}</div>
+    {{ form.password2 }}
+    </div>
+
+    {{ form.}}
+
+    <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+</form>
+</div>
+</div>
+</div>
+
+{% endblock content %}

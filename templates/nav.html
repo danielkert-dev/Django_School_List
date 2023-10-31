@@ -1,0 +1,52 @@
+<div class="navbar navbar-expand-sm navbar-dark bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'index' %}">Home</a>
+        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav ">
+
+            {% if not user.is_authenticated %}
+
+            <div class="nav-item ">
+            <a class="nav-link" href="{% url 'signin' %}">Login</a>
+            </div>
+
+            <div class="nav-item">
+            <a class="nav-link" href="{% url 'signup' %}">Signup</a>
+            </div>
+
+            {% elif user.is_authenticated %}
+
+            <div class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+            </div>
+            {% endif %}
+
+            <div class="nav-item">
+            <a class="nav-link" href="{% url 'about' %}">About</a>
+            </div>
+
+            {% if user.is_authenticated %}
+            <hr>
+            <div class="nav-item ">
+              <!-- Username -->
+              <a class="nav-link text-light" style="align-items: center">User: <strong>{{ user.username }}</strong></a>
+            </div>
+
+            <div class="nav-item mx-2">
+            <img src="{{ user.userprofile.image.url }}" alt="{{ user.username }}'s profile picture" width="30" height="30" class="object-fit-cover rounded-circle mt-1">
+            </div>
+
+            <div class="nav-item ">
+            <a class=" btn btn-primary my-auto" href="{% url 'profile' %}">Profile</a>
+            </div>
+
+            
+            {% endif %}
+        </div>
+      </div>
+
+    </div>
+</div>
