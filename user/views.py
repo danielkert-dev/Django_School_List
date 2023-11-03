@@ -57,6 +57,8 @@ def profile(request):
             user_form.save()
             messages.success(request, 'Profile updated successfully.')
             return redirect('profile')
+        else:
+            messages.error(request, 'Something went wrong.')
 
     if request.method == 'POST' and 'change_password' in request.POST:
         password_form = forms.ProfilePasswordChangeForm(request.user, request.POST)
@@ -64,6 +66,8 @@ def profile(request):
             password_form.save()
             messages.success(request, 'Password updated successfully.')
             return redirect('profile')
+        else :
+            messages.error(request, 'Something went wrong.')
         
     if request.method == 'POST' and 'user_profile' in request.POST:
         profile_form = forms.UserProfileForm(request.POST, request.FILES, instance=request.user.userprofile)
@@ -71,6 +75,7 @@ def profile(request):
             profile_form.save()
             messages.success(request, 'Image updated successfully.')
             return redirect('profile')
-
+        else:
+            messages.error(request, 'Something went wrong.')
 
     return render(request, 'auth/profile.html', {'user_form': user_form, 'password_form': password_form, 'profile_form': profile_form})

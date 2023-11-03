@@ -11,38 +11,74 @@
 </div>
 
 <div class="row">
-<div class="col-md-6">
-<div class=" card mx-auto">
-    <div class="card-header">
-        <h3 class="text-center"> Add to List </h3>
-    </div>
-    <div class="card-body">
-        <form method="post" action="{% url 'add_list' %}">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary w-100 my-2">Add object</button>
-        </form>
-    </div>
-</div>
-</div>
 
 {% if list %}
-<div class="col-md-6">
+<div class="col-md-12">
+
+    <div class="text-center mx-auto d-flex justify-content-center">
+    <div class="pagination">
+        <ul class="pagination">
+            {% if list.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?p=1">&laquo; first</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?p={{ list.previous_page_number }}">previous</a>
+                </li>
+            {% endif %}
+    
+            <li class="page-item disabled">
+                <span class="page-link">Page {{ list.number }} of {{ list.paginator.num_pages }}</span>
+            </li>
+    
+            {% if list.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?p={{ list.next_page_number }}">next</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?p={{ list.paginator.num_pages }}">last &raquo;</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+    </div>
+    
+    <form method="get" class="form-inline my-2 my-3">
+        <div class="input-group">
+            <input type="text" class="form-control" name="search" placeholder="Search object..." aria-label="Search">
+            <div class="input-group-append">
+                {% if request.GET.search %}
+                    <a href="{% url 'index' %}" class="btn btn-outline-danger">Clear Search</a>
+                {% else %}
+                    <button type="submit" class="btn btn-outline-primary">Submit</button>
+                {% endif %}
+            </div>
+        </div>
+    </form>
+    
+    
+    
 <div class=" card mx-auto mb-5">
     <div class="card-header">
         <h3 class="text-center"> The list </h3>
+        <div class="text-center">
+        <a href="{% url 'create' %}" class="btn btn-primary my-2">Add object</a>
+
+
+        </div>
     </div>
-    <div class="card-body">
+    <div class="card-body mx-auto w-75">
         {% for item in list %}
         <ul>
-            <li>
+            <li class="list-group-item rounded mx-auto">
                 <p> {{ item.title }} - ({{ item.date | date:"h:i d M Y" }}) 
                     {% if user.is_superuser%}
-                    - {{ item.user }}
+                    <br><br>{{ item.user }}  <img class="rounded-circle" src="{{ item.user.userprofile.image.url }}" width="30" height="30">
                     {% endif %}
                     <p class="text-muted">{{ item.description }}</p>
                     <form method="post" action="{% url 'delete_list' item.id %}">
                         {% csrf_token %}
+                        <a href="{% url 'detail' item.id %}" class="btn btn-primary">Detail</a>
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
                 </p>

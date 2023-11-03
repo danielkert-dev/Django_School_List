@@ -3,6 +3,10 @@ from .models import List
 from django.contrib.auth.models import User
 
 class ListForm(forms.ModelForm):
+
+    description = forms.CharField(widget=forms.Textarea(attrs={"rows":"5"}))
+
+
     class Meta:
         model = List
         fields = ['title', 'description', 'user']
@@ -34,3 +38,6 @@ class ListForm(forms.ModelForm):
         else:
             self.fields['user'].initial = user
             self.fields['user'].widget = forms.HiddenInput()
+
+
+# forms.py

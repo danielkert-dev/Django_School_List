@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include "nav.html" %}
+<div class="container">
+
+{% if list %}
+<h1 class="text-center my-5"> Detail page </h1>
+    <div class="card mt-5 mx-auto">
+        <div class="card-header">
+            <h3 class="text-center"> Object </h3>
+        </div>
+        <div class="card-body mx-auto w-75">
+            <ul>
+                <li class="list-unstyled border rounded p-5">
+                    <p> {{ list.title }} - ({{ list.date | date:"h:i d M Y" }}) 
+                        <br><br>
+                        {{ list.user }}  <img class="rounded-circle" src="{{ list.user.userprofile.image.url }}" width="30" height="30">   
+                    </p>
+                    <p class="text-muted"> {{ list.description }} </p>
+                </li>
+                <li class="list-unstyled my-3">
+                    <form method="post" action="{% url 'delete_list' list.id %}" class="">
+                        {% csrf_token %}
+                        <a href="{% url 'index' %}" class="btn btn-secondary mx-1">Back</a>
+                        <a href="{% url 'edit_list' list.id %}" class="btn btn-primary mx-1">Edit</a>
+                        <button type="submit" class="btn btn-danger mx-1">Delete</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+{% else %}
+<div class="col-md-6">
+<div class=" card mx-auto mb-5">
+    <div class="card-header">
+        <h3 class="text-center"> The list is empty </h3>
+    </div>
+</div>
+{% endif %}
+
+
+</div>
+{% endblock content %}

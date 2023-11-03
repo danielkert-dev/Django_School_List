@@ -50,3 +50,8 @@
 
     </div>
 </div>
+
+{% if messages %} {% for message in messages %} 
+<div class="alert alert-warning alert-dismissible fade show w-50 m-5 mx-auto" role="alert">
+    {{ message }}
+</div> {% endfor %} {% endif %}
