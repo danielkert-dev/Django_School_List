@@ -18,11 +18,11 @@ class PostList(LoginRequiredMixin, ListView):
     model = models.List
     template_name = 'core/index.html'
     context_object_name = 'list'
-    paginate_by = 3  # Set the number of items per page
+    paginate_by = 5  # Set the number of items per page
     page_kwarg = 'p'  # Use ?p= for pagination
 
     def get_queryset(self):
-        queryset = models.List.objects.all()  # By default, show all items
+        queryset = models.List.objects.all()  # Start with all items
         search_query = self.request.GET.get('search')
         if search_query:
             # Modify the queryset to filter by search query in title, description, or user
@@ -37,14 +37,16 @@ class PostList(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         page = self.request.GET.get(self.page_kwarg)
-        paginator = Paginator(self.get_queryset(), self.paginate_by)
 
-        
+        # Pass the original queryset to the Paginator
+        queryset = self.get_queryset()
+        paginator = Paginator(queryset, self.paginate_by)
+
         try:
             items = paginator.page(page)
         except (PageNotAnInteger, EmptyPage):
             items = paginator.page(1)
-        
+
         context['list'] = items
         context['form'] = forms.ListForm(user=self.request.user)
         return context
